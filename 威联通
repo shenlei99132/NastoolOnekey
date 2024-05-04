@@ -1,1 +1,2 @@
-
+docker_path = "/share/Container"
+video_path = "/share/video"
