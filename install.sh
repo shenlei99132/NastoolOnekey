@@ -1,9 +1,10 @@
 #!/bin/bash
 
 # 显示选择菜单
-echo "请选择一个选项："
-echo "  1. 执行脚本"
-echo "  2. 显示开发状态"
+echo "请选择系统："
+echo "  1. Synology（6.2.3-7.2.1）"
+echo "  2. 威联通（测试版）"
+echo "  3. Unraid "
 
 # 读取用户输入
 read -p "请输入你的选择 (1 或 2): " choice
