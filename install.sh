@@ -53,4 +53,5 @@ if [ ! -e "$device_path" ]; then
 else
     echo "设备文件 $device_path 存在，无需修改。"
 fi
+docker-compose up
 
