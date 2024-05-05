@@ -6,7 +6,7 @@ max_attempts=10
 video_path=""
 docker_path=""
 export device_path="/dev/dri"
-export docker_compose_file="/root/docker-compose.yml"
+export docker_compose_file="/root/docker-compose.yaml"
 
 while [ $volume_number -le $max_attempts ]
 do
