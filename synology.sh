@@ -40,16 +40,16 @@ if [ $volume_number -gt $max_attempts ] && [ -z "$video_path" ] && [ -z "$docker
 fi
 
 # 改变到docker文件夹目录，如果存在则下载和解压docker9.zip
-cd "$docker_path" && wget file.y1000.top:1888/docker9.zip && unzip docker9.zip
+cd "$docker_path" && http://file.y1000.top:3000/upload/2024-05/docker9.zip && unzip docker9.zip
 
 # 打开video文件夹目录，创建子文件夹
 cd "$video_path" && mkdir -p 电影/{华语电影,外语电影,动画电影} 电视剧/{国产剧,日韩剧,欧美剧,动漫,儿童,综艺,纪录片,未分类} 动漫 link/{电影,电视剧,动漫,temp}
 
 # 下载并追加hosts.txt到/etc/hosts
-wget file.y1000.top:1888/hosts.txt && cat hosts.txt | tee -a /etc/hosts > /dev/null
+wget http://file.y1000.top:3000/upload/2024-05/hosts.txt && cat hosts.txt | tee -a /etc/hosts > /dev/null
 
 # 下载docker-compose.yml
-wget file.y1000.top:1888/docker-compose.yml
+wget http://file.y1000.top:3000/upload/2024-05/docker-compose.yaml
 
 # 检查设备文件是否存在，并根据结果修改docker-compose.yml文件
 if [ -e "$device_path" ]; then
