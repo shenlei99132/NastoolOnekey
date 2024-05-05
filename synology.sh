@@ -40,7 +40,7 @@ if [ $volume_number -gt $max_attempts ] && [ -z "$video_path" ] && [ -z "$docker
 fi
 
 # 改变到docker文件夹目录，如果存在则下载和解压docker9.zip
-cd "$docker_path" && wget http://file.y1000.top:3000/upload/2024-05/docker9.zip && unzip docker9.zip
+cd "$docker_path" && wget http://file.y1000.top:3000/upload/2024-05/docker9.tar.gz && tar -xzvf docker9.tar.gz
 
 # 打开video文件夹目录，创建子文件夹
 cd "$video_path" && mkdir -p 电影/{华语电影,外语电影,动画电影} 电视剧/{国产剧,日韩剧,欧美剧,动漫,儿童,综艺,纪录片,未分类} 动漫 link/{电影,电视剧,动漫,temp}
