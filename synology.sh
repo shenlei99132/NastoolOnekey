@@ -14,7 +14,7 @@ do
     if [ -d "$video_path" ]; then
         echo "找到video文件夹：$video_path"
     else
-        video_path=""
+        export video_path=""
     fi
 
     # 检查docker文件夹
@@ -22,7 +22,7 @@ do
     if [ -d "$docker_path" ]; then
         echo "找到docker文件夹：$docker_path"
     else
-        docker_path=""
+        export docker_path=""
     fi
 
     # 如果两个文件夹都找到了，退出循环
