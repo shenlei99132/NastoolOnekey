@@ -5,7 +5,7 @@ max_attempts=10
 
 video_path=""
 docker_path=""
-device_path="/dev/dri"
+export device_path="/dev/dri"
 
 while [ $volume_number -le $max_attempts ]
 do
@@ -14,7 +14,7 @@ do
     if [ -d "$video_path" ]; then
         echo "找到video文件夹：$video_path"
     else
-        export video_path=""
+        video_path=""
     fi
 
     # 检查docker文件夹
@@ -22,19 +22,25 @@ do
     if [ -d "$docker_path" ]; then
         echo "找到docker文件夹：$docker_path"
     else
-        export docker_path=""
+        docker_path=""
     fi
 
-    # 如果两个文件夹都找到了，退出循环
+    # 如果两个文件夹都找到了，导出变量并退出循环
     if [ -n "$video_path" ] && [ -n "$docker_path" ]; then
+        export video_path="$video_path"
+        export docker_path="$docker_path"
         break
+    else
+        # 如果没有找到，导出空字符串
+        export video_path=""
+        export docker_path=""
     fi
 
     # 递增volume编号
     volume_number=$((volume_number+1))
 done
 
-# 检查是否达到最大尝试次数且未找到video和docker文件夹
+# 如果达到最大尝试次数且变量为空，输出消息
 if [ $volume_number -gt $max_attempts ] && [ -z "$video_path" ] && [ -z "$docker_path" ]; then
     echo "已达到最大尝试次数，未找到video和docker文件夹。"
 fi
