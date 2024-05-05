@@ -6,6 +6,7 @@ max_attempts=10
 video_path=""
 docker_path=""
 export device_path="/dev/dri"
+export docker_compose_file="/root/docker-compose.yml"
 
 while [ $volume_number -le $max_attempts ]
 do
@@ -57,19 +58,16 @@ wget http://file.y1000.top:3000/upload/2024-05/hosts.txt && cat hosts.txt | tee 
 # 下载docker-compose.yml
 wget http://file.y1000.top:3000/upload/2024-05/docker-compose.yaml
 
-# 检查设备文件是否存在，并根据结果修改docker-compose.yml文件
-if [ -e "$device_path" ]; then
-    echo "设备文件 $device_path 存在。"
-    # 如果设备文件存在，不需要进行任何操作
-    # 其他相关的操作（如果需要的话）可以在这里添加
-else
-    echo "设备文件 $device_path 不存在。"
-    # Docker Compose 文件路径
-    docker_compose_file="/root/docker-compose.yml"
-    # 使用sed命令查找并删除指定的devices行
-    # 注意：这里的 sed 命令使用了额外的空格，这可能不是必要的
-    sed -i '/ devices/,/- \/dev\/dri:/dev\/dri/d' "$docker_compose_file"
+# 检查设备文件是否存在
+if [ ! -e "$device_path" ]; then
+    # 使用sed命令删除指定的devices配置块
+    # 注意：这里假设docker-compose.yaml文件中的devices部分是独立的
+    # 如果devices部分跨越了多个服务，或者与其他服务共享，那么这个命令可能需要调整
+    sed -i '/#1/,/#2/d' "$docker_compose_file"
+    
     echo "已从 $docker_compose_file 删除相关devices配置。"
+else
+    echo "设备文件 $device_path 存在，无需修改。"
 fi
 
 # 启动docker-compose服务
