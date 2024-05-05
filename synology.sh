@@ -71,4 +71,4 @@ else
 fi
 
 # 启动docker-compose服务
-docker-compose up
+docker-compose up -d
