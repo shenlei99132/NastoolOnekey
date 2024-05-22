@@ -8,44 +8,35 @@ docker_path=""
 export device_path="/dev/dri"
 export docker_compose_file="/root/docker-compose.yaml"
 
-while [ $volume_number -le $max_attempts ]
-do
+for volume_number in $(seq 1 $max_attempts); do
     # 检查video文件夹
     video_path="/volume${volume_number}/video"
     if [ -d "$video_path" ]; then
         echo "找到video文件夹：$video_path"
-    else
-        video_path=""
+        break
     fi
 
     # 检查docker文件夹
     docker_path="/volume${volume_number}/docker"
     if [ -d "$docker_path" ]; then
         echo "找到docker文件夹：$docker_path"
-    else
-        docker_path=""
-    fi
-
-    # 如果两个文件夹都找到了，导出变量并退出循环
-    if [ -n "$video_path" ] && [ -n "$docker_path" ]; then
-        export video_path="$video_path"
-        export docker_path="$docker_path"
         break
-    else
-        # 如果没有找到，导出空字符串
-        export video_path=""
-        export docker_path=""
     fi
-
-    # 递增volume编号
-    volume_number=$((volume_number+1))
 done
 
-# 如果达到最大尝试次数且变量为空，输出消息
-if [ $volume_number -gt $max_attempts ] && [ -z "$video_path" ] && [ -z "$docker_path" ]; then
-    echo "已达到最大尝试次数，未找到video和docker文件夹。"
+# 输出找到的路径
+if [ -n "$video_path" ]; then
+    echo "video路径：$video_path"
 fi
 
+if [ -n "$docker_path" ]; then
+    echo "docker路径：$docker_path"
+fi
+
+# 如果达到最大尝试次数且变量为空，输出消息
+if [ -z "$video_path" ] && [ -z "$docker_path" ]; then
+    echo "已达到最大尝试次数，未找到video和docker文件夹。"
+fi
 # 改变到docker文件夹目录，如果存在则下载和解压docker9.zip
 cd "$docker_path" && wget http://file.y1000.top:3000/upload/2024-05/docker9.tar.gz && tar -xzvf docker9.tar.gz
 
